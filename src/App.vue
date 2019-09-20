@@ -5,8 +5,9 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    <div>Тест</div>
   </div>
-</template>
+  </template>
 
 <style lang="scss">
 #app {

@@ -1,6 +1,6 @@
 <template lang="pug">
   .header-search
-    .header-search-input(:class={'header-search-input-focus': qwe})
+    .header-search-input(:class="{'header-search-input-focus': focus}")
       .header-search-icon
       input(placeholder="Поиск" @focus="inputFocus" @blur="inputBlur")
       .header-search-clear
@@ -12,20 +12,15 @@ export default {
   props: {},
   data () {
     return {
-      focus: true,
-      qwe: true
+      focus: false
     }
   },
   methods: {
     inputFocus () {
-      console.log('inputFocus')
       this.focus = true
-      console.log(this.focus)
     },
     inputBlur () {
-      console.log('inputBlur')
       this.focus = false
-      console.log(this.focus)
     }
   }
 }
@@ -36,7 +31,6 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 10px;
   .header-search-input {
     height: 27px;
     border: 1px #bfbfbf solid;

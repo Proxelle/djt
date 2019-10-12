@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     searchResult () {
-	  let result = []	
+      let result = []
       let listItemsSearch = [
         {
           page: '1',
@@ -36,19 +36,19 @@ export default {
           page: '4',
           description: '44444444'
         }
-	  ]
-	  for(let i = this.page * 3; i < 10; i ++) {
-	    result.push(listItemsSearch)
-	  }
-	  return result
-	}
+      ]
+      for (let i = this.page * 3; i < 10; i++) {
+        result.push(listItemsSearch)
+      }
+      return result
+    }
   },
   methods: {
     navCount () {
       return Math.ceil(this.searchResult.length / 3)
     },
     openPage (index) {
-	  this.page = index
+      this.page = index
     }
   }
 }

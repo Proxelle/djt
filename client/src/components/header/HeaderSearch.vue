@@ -5,7 +5,7 @@
         i.fas.fa-search
       input(v-model="input" placeholder="Поиск" @focus="inputFocus" @blur="inputBlur")
       .header-search-clear(@click="clearInput")
-        i.fas.fa-times-circle
+        i.fas.fa-times-circle(v-if="input")
     header-search-result(v-if="showResultSearch")
 </template>
 
@@ -53,14 +53,14 @@ export default {
   position: relative;
   .header-search-input {
     display: flex;
-    height: 27px;
+    height: 26px;
     border: 1px #bfbfbf solid;
     box-shadow: inset 0px 1px 2px rgba(0,0,0,0.15);
     color: white;
     background-color: #969662;
     .header-search-icon {
-      height: 29px;
-      width: 29px;
+      height: 26px;
+      width: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -70,17 +70,19 @@ export default {
     }
     input {
       height: 100%;
+      width: 126px;
       border: none;
       outline: none;
       background-color: #969662;
       color: white;
+      font-weight: bold;
       &::placeholder {
         color: white !important;
       }
     }
     .header-search-clear {
-      height: 29px;
-      width: 29px;
+      height: 26px;
+      width: 26px;
       display: flex;
       align-items: center;
       justify-content: center;

@@ -7,17 +7,48 @@
         span.registration-title-text Регистрация
         span.registration-required-fields * - обязательные поля
       .registration-input-section
+        label Фамилия *
+        .registration-input
+          .registration-input-icon
+            i.fas.fa-user-alt
+          input(v-model="lastName")
+      .registration-input-section
         label Имя *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="name")
+          input(v-model="firstName")
+      .registration-input-section
+        label Отчество *
+        .registration-input
+          .registration-input-icon
+            i.fas.fa-user-alt
+          input(v-model="patronymic")
+      .registration-input-section
+        label Дата рождения *
+        .registration-input
+          .registration-input-icon
+            i.fas.fa-user-alt
+          // input(v-model="age")
+          datepicker(v-model="age")
       .registration-input-section
         label E-mail *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="eMail")
+          input(v-model="email")
+      .registration-input-section
+        label Страна *
+        .registration-input
+          .registration-input-icon
+            i.fas.fa-user-alt
+          input(v-model="country")
+      .registration-input-section
+        label Город *
+        .registration-input
+          .registration-input-icon
+            i.fas.fa-user-alt
+          input(v-model="city")
       .registration-input-section
         label Пароль *
         .registration-input
@@ -35,12 +66,21 @@
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker'
 export default {
   name: 'registration',
+  components: {
+    Datepicker
+  },
   data () {
     return {
-      name: '',
-      eMail: '',
+      lasstName: '',
+      firstName: '',
+      patronymic: '',
+      age: '',
+      country: '',
+      city: '',
+      email: '',
       password1: '',
       password2: ''
     }
@@ -48,8 +88,13 @@ export default {
   methods: {
     send () {
       this.$store.dispatch('sendRegistrationData', {
-        name: this.name,
-        eMail: this.eMail,
+        lasstName: this.lasstName,
+        firstName: this.firstName,
+        patronymic: this.patronymic,
+        age: this.age,
+        country: this.country,
+        city: this.city,
+        email: this.email,
         password2: this.password2
       })
       this.close()

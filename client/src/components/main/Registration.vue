@@ -11,36 +11,49 @@
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input
+          input(v-model="name")
       .registration-input-section
         label E-mail *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input
+          input(v-model="eMail")
       .registration-input-section
         label Пароль *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input
+          input(v-model="password")
       .registration-input-section
         label Повторите пароль *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input
-      .registration-button
-        .registration-button-btn Отправить
+          input(v-model="password2")
+      .registration-button-section
+        .registration-button-btn(@click="send") Отправить
 </template>
 
 <script>
 export default {
-  name: 'registration',
+  name: 'reg',
+  data () {
+    return {
+      name: '',
+      eMail: '',
+      password: '',
+      password2: ''
+    }
+  },
   methods: {
+    send () {
+      this.axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then((response) => {
+        console.log(response.data)
+      })
+    },
     close () {
-      console.log(this.$modal)
-      this.$modal.hide('registration')
+      this.$emit('close')
+      // this.$modal.hide('reg')
     }
   }
 }
@@ -131,7 +144,7 @@ export default {
           }
         }
       }
-      .registration-button {
+      .registration-button-section {
         display: flex;
         justify-content: flex-end;
         margin-bottom: 8px;

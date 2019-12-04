@@ -7,7 +7,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
-Vue.use(VModal, { dynamic: true, injectModalsContainer: true, dynamicDefaults: { clickToClose: true } })
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
 
 Vue.config.productionTip = false
 

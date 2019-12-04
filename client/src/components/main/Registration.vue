@@ -23,7 +23,7 @@
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="password")
+          input(v-model="password1")
       .registration-input-section
         label Повторите пароль *
         .registration-input
@@ -36,24 +36,26 @@
 
 <script>
 export default {
-  name: 'reg',
+  name: 'registration',
   data () {
     return {
       name: '',
       eMail: '',
-      password: '',
+      password1: '',
       password2: ''
     }
   },
   methods: {
     send () {
-      this.axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then((response) => {
-        console.log(response.data)
+      this.$store.dispatch('sendRegistrationData', {
+        name: this.name,
+        eMail: this.eMail,
+        password2: this.password2
       })
+      this.close()
     },
     close () {
       this.$emit('close')
-      // this.$modal.hide('reg')
     }
   }
 }

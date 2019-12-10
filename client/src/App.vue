@@ -20,5 +20,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+  .v--modal {
+    overflow: visible !important;
+  }
 </style>

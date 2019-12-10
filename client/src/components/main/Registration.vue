@@ -12,6 +12,12 @@
           .registration-input-icon
             i.fas.fa-user-alt
           input(v-model="lastName")
+          transition(name="error")
+            .error-label(v-show="error.lastName")
+              .error-label-icon
+                i.fas.fa-exclamation
+              .error-label-text Введите фамилию
+              .error-label-triangle
       .registration-input-section
         label Имя *
         .registration-input
@@ -74,7 +80,7 @@ export default {
   },
   data () {
     return {
-      lasstName: '',
+      lastName: '',
       firstName: '',
       patronymic: '',
       age: '',
@@ -82,12 +88,15 @@ export default {
       city: '',
       email: '',
       password1: '',
-      password2: ''
+      password2: '',
+      error: {
+        lastName: false
+      }
     }
   },
   methods: {
     send () {
-      this.$store.dispatch('sendRegistrationData', {
+      this.checkInputs() && this.$store.dispatch('sendRegistrationData', {
         lasstName: this.lasstName,
         firstName: this.firstName,
         patronymic: this.patronymic,
@@ -97,7 +106,11 @@ export default {
         email: this.email,
         password2: this.password2
       })
-      this.close()
+      // this.close()
+    },
+    checkInputs () {
+      // const arr = [lastName, firstName, patronymic, age, country, city, email, password1, password2]
+      if (this.error.lastName) this.error.lastName = true
     },
     close () {
       this.$emit('close')
@@ -164,6 +177,7 @@ export default {
           font-size: 11px;
         }
         .registration-input {
+          position: relative;
           width: 100%;
           box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
           height: 28px;
@@ -188,6 +202,50 @@ export default {
             &::placeholder {
               color: #BABABA !important;
             }
+          }
+          .error-label {
+            position: absolute;
+            right: 213px;
+            top: 0px;
+            font-size: 12px;
+            padding: 3px 6px;
+            min-height: 20px;
+            color: white;
+            font-weight: bold;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            border: 1px solid #991200;
+            background-color: #e0401d;
+            background-image: linear-gradient(to bottom, #e0401d, #b73016);
+            .error-label-icon {
+              height: 15px;
+              width: 15px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #76200E;
+              border-radius: 8px;
+              font-size: 9px;
+              color: #CC3819;
+              margin-right: 4px;
+            }
+            .error-label-triangle {
+              border: 6px solid transparent;
+              border-left: 6px solid #991200;
+              position: absolute;
+              right: -13px;
+            }
+          }
+          .error-enter-active {
+            transition: all .3s ease;
+          }
+          .error-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+          }
+          .error-enter, .error-leave-to {
+            opacity: 0;
+            transform: translateX(-50px);
           }
         }
       }

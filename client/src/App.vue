@@ -23,4 +23,16 @@ export default {
   .v--modal {
     overflow: visible !important;
   }
+  .vdp-datepicker {
+    div {
+      input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+    }
+    .vdp-datepicker__calendar {
+      width: 173px !important;
+    }
+  }
 </style>

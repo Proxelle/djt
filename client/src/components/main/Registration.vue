@@ -6,67 +6,69 @@
       .registration-title
         span.registration-title-text Регистрация
         span.registration-required-fields * - обязательные поля
-      .registration-input-section
-        label Фамилия *
-        .registration-input
+      .registration-input-section(v-for="input in inputs")
+        label {{ input.label + (input.required ? ' *' : '') }}
+        .registration-input(:class="{'input-error': (input.inputError && !input.value.length)}")
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="lastName")
+          .input-datepicker(v-if="input.name === 'age'")
+            datepicker(v-model="input.value")
+          input(v-else v-model="input.value" @focus="inputFocus(input)")
           transition(name="error")
-            .error-label(v-show="error.lastName")
+            .error-label(v-show="input.error")
               .error-label-icon
                 i.fas.fa-exclamation
-              .error-label-text Введите фамилию
+              .error-label-text {{ 'Введите ' + loverCase(input.label) }}
               .error-label-triangle
-      .registration-input-section
+      //.registration-input-section
         label Имя *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="firstName")
-      .registration-input-section
+          input(v-model="firstName.value")
+      //.registration-input-section
         label Отчество *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="patronymic")
-      .registration-input-section
+          input(v-model="patronymic.value")
+      //.registration-input-section
         label Дата рождения *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
           // input(v-model="age")
-          datepicker(v-model="age")
-      .registration-input-section
+          datepicker(v-model="age.value")
+      //.registration-input-section
         label E-mail *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="email")
-      .registration-input-section
+          input(v-model="email.value")
+      //.registration-input-section
         label Страна *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="country")
-      .registration-input-section
+          input(v-model="country.value")
+      //.registration-input-section
         label Город *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="city")
-      .registration-input-section
+          input(v-model="city.value")
+      //.registration-input-section
         label Пароль *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="password1")
-      .registration-input-section
+          input(v-model="password1.value")
+      //.registration-input-section
         label Повторите пароль *
         .registration-input
           .registration-input-icon
             i.fas.fa-user-alt
-          input(v-model="password2")
+          input(v-model="password2.value")
       .registration-button-section
         .registration-button-btn(@click="send") Отправить
 </template>
@@ -80,40 +82,106 @@ export default {
   },
   data () {
     return {
-      lastName: '',
-      firstName: '',
-      patronymic: '',
-      age: '',
-      country: '',
-      city: '',
-      email: '',
-      password1: '',
-      password2: '',
-      error: {
-        lastName: false
+      inputs: {
+        lastName: {
+          value: '',
+          label: 'Фамилия',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        firstName: {
+          value: '',
+          label: 'Имя',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        patronymic: {
+          value: '',
+          label: 'Отчество',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        country: {
+          value: '',
+          label: 'Страна',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        city: {
+          value: '',
+          label: 'Город',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        age: {
+          name: 'age',
+          value: '',
+          label: 'Возраст',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        email: {
+          value: '',
+          label: 'e-mail',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        password1: {
+          value: '',
+          label: 'Пароль',
+          error: false,
+          inputError: false,
+          required: true
+        },
+        password2: {
+          value: '',
+          label: 'Повторите пароль',
+          error: false,
+          inputError: false,
+          required: true
+        }
       }
     }
   },
   methods: {
     send () {
-      this.checkInputs() && this.$store.dispatch('sendRegistrationData', {
-        lasstName: this.lasstName,
-        firstName: this.firstName,
-        patronymic: this.patronymic,
-        age: this.age,
-        country: this.country,
-        city: this.city,
-        email: this.email,
-        password2: this.password2
-      })
+      this.checkInputs()
+      // this.checkInputs() && this.$store.dispatch('sendRegistrationData', {
+      //   lasstName: this.lasstName.value,
+      //   firstName: this.firstName.value,
+      //   patronymic: this.patronymic.value,
+      //   age: this.age.value,
+      //   country: this.country.value,
+      //   city: this.city.value,
+      //   email: this.email.value,
+      //   password2: this.password2.value
+      // })
       // this.close()
     },
     checkInputs () {
-      // const arr = [lastName, firstName, patronymic, age, country, city, email, password1, password2]
-      if (this.error.lastName) this.error.lastName = true
+      for (let key in this.inputs) {
+        if (!this.inputs[key].value) {
+          this.inputs[key].error = true
+          return true
+        }
+      }
+    },
+    inputFocus (input) {
+      if (input.error) input.inputError = true
+      input.error = false
     },
     close () {
       this.$emit('close')
+    },
+    loverCase (value) {
+      return value.toLowerCase()
     }
   }
 }
@@ -180,7 +248,7 @@ export default {
           position: relative;
           width: 100%;
           box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
-          height: 28px;
+          height: 26px;
           outline: none;
           background-color: #f4f4f4;
           border: none;
@@ -188,6 +256,7 @@ export default {
           display: flex;
           align-items: center;
           color: #BABABA;
+          border: 1px solid #FFFFFF;
           .registration-input-icon {
             width: 28px;
             display: flex;
@@ -247,6 +316,9 @@ export default {
             opacity: 0;
             transform: translateX(-50px);
           }
+        }
+        .input-error {
+          border: 1px solid red;
         }
       }
       .registration-button-section {

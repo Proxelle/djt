@@ -69,16 +69,19 @@
           .registration-input-icon
             i.fas.fa-user-alt
           input(v-model="password2.value")
+      password(v-model="inputs.password1.value" :strength-meter-only="true")
       .registration-button-section
         .registration-button-btn(@click="send") Отправить
 </template>
 
 <script>
 import Datepicker from 'vuejs-datepicker'
+import Password from 'vue-password-strength-meter'
 export default {
   name: 'registration',
   components: {
-    Datepicker
+    Datepicker,
+    Password
   },
   data () {
     return {

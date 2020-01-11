@@ -8,67 +8,19 @@
         span.registration-required-fields * - обязательные поля
       .registration-input-section(v-for="input in inputs")
         label {{ input.label + (input.required ? ' *' : '') }}
-        .registration-input(:class="{'input-error': (input.inputError && !input.value.length)}")
+        .registration-input(:class="{'input-error': (input.inputError && !input.value)}")
           .registration-input-icon
-            i.fas.fa-user-alt
-          .input-datepicker(v-if="input.name === 'age'")
-            datepicker(v-model="input.value")
-          input(v-else v-model="input.value" @focus="inputFocus(input)")
+            i.fas.fa-check(v-if="showCheckIcon(input)")
+            i(v-else :class="input.icon")
+          .input-datepicker(v-if="input.name === 'age'" @click="inputFocus(input)")
+            datepicker(v-model="input.value" :language="ru")
+          input(v-else v-model="input.value" @focus="inputFocus(input)" :type="input.inputType")
           transition(name="error")
             .error-label(v-show="input.error")
               .error-label-icon
                 i.fas.fa-exclamation
-              .error-label-text {{ 'Введите ' + loverCase(input.label) }}
+              .error-label-text {{ errorText(input.label) }}
               .error-label-triangle
-      //.registration-input-section
-        label Имя *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="firstName.value")
-      //.registration-input-section
-        label Отчество *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="patronymic.value")
-      //.registration-input-section
-        label Дата рождения *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          // input(v-model="age")
-          datepicker(v-model="age.value")
-      //.registration-input-section
-        label E-mail *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="email.value")
-      //.registration-input-section
-        label Страна *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="country.value")
-      //.registration-input-section
-        label Город *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="city.value")
-      //.registration-input-section
-        label Пароль *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="password1.value")
-      //.registration-input-section
-        label Повторите пароль *
-        .registration-input
-          .registration-input-icon
-            i.fas.fa-user-alt
-          input(v-model="password2.value")
       password(v-model="inputs.password1.value" :strength-meter-only="true")
       .registration-button-section
         .registration-button-btn(@click="send") Отправить
@@ -76,6 +28,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker'
+import { ru } from 'vuejs-datepicker/dist/locale'
 import Password from 'vue-password-strength-meter'
 export default {
   name: 'registration',
@@ -89,6 +42,8 @@ export default {
         lastName: {
           value: '',
           label: 'Фамилия',
+          icon: ['fas', 'fa-user-alt'],
+          inputType: 'text',
           error: false,
           inputError: false,
           required: true
@@ -96,6 +51,8 @@ export default {
         firstName: {
           value: '',
           label: 'Имя',
+          icon: ['fas', 'fa-user-alt'],
+          inputType: 'text',
           error: false,
           inputError: false,
           required: true
@@ -103,6 +60,8 @@ export default {
         patronymic: {
           value: '',
           label: 'Отчество',
+          icon: ['fas', 'fa-user-alt'],
+          inputType: 'text',
           error: false,
           inputError: false,
           required: true
@@ -110,6 +69,8 @@ export default {
         country: {
           value: '',
           label: 'Страна',
+          icon: ['far', 'fa-flag'],
+          inputType: 'text',
           error: false,
           inputError: false,
           required: true
@@ -117,6 +78,8 @@ export default {
         city: {
           value: '',
           label: 'Город',
+          icon: ['fas', 'fa-city'],
+          inputType: 'text',
           error: false,
           inputError: false,
           required: true
@@ -125,6 +88,8 @@ export default {
           name: 'age',
           value: '',
           label: 'Возраст',
+          icon: ['fas', 'fa-birthday-cake'],
+          inputType: 'text',
           error: false,
           inputError: false,
           required: true
@@ -132,6 +97,8 @@ export default {
         email: {
           value: '',
           label: 'e-mail',
+          icon: ['fas', 'fa-envelope'],
+          inputType: 'email',
           error: false,
           inputError: false,
           required: true
@@ -139,6 +106,8 @@ export default {
         password1: {
           value: '',
           label: 'Пароль',
+          icon: ['fas', 'fa-unlock-alt'],
+          inputType: 'password',
           error: false,
           inputError: false,
           required: true
@@ -146,16 +115,26 @@ export default {
         password2: {
           value: '',
           label: 'Повторите пароль',
+          icon: ['fas', 'fa-unlock-alt'],
+          inputType: 'password',
           error: false,
           inputError: false,
           required: true
         }
-      }
+      },
+      ru: ru
+    }
+  },
+  computed: {
+    checkPasswords () {
+      return this.inputs.password1.value === this.inputs.password2.value
     }
   },
   methods: {
     send () {
-      this.checkInputs()
+      if (this.checkInputs()) {
+        this.close()
+      }
       // this.checkInputs() && this.$store.dispatch('sendRegistrationData', {
       //   lasstName: this.lasstName.value,
       //   firstName: this.firstName.value,
@@ -169,12 +148,28 @@ export default {
       // this.close()
     },
     checkInputs () {
+      this.errorClear()
       for (let key in this.inputs) {
-        if (!this.inputs[key].value) {
+        let checkEmail = key === 'email' && !this.validateEmail(this.inputs.email.value)
+        let checkPassword1 = key === 'password1' && this.inputs.password1.value.length < 8
+
+        if (!this.inputs[key].value || checkEmail || checkPassword1 || (key === 'password2' && !this.checkPasswords)) {
           this.inputs[key].error = true
-          return true
+          return false
         }
       }
+      return true
+    },
+    validateEmail (email) {
+      let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(String(email).toLowerCase())
+    },
+    validatePass (pass) {
+      let letter = /[a-zA-Z]/
+      let number = /[0-9]/
+
+      if (pass.length < 8 || !letter.test(pass) || !number.test(pass)) return false
+      else return true
     },
     inputFocus (input) {
       if (input.error) input.inputError = true
@@ -183,8 +178,24 @@ export default {
     close () {
       this.$emit('close')
     },
-    loverCase (value) {
-      return value.toLowerCase()
+    errorText (text) {
+      if (text === 'e-mail' && !this.validateEmail(this.inputs.email.value)) return 'Некорректный e-mail'
+      else if (text === 'Пароль' && this.inputs.password1.value.length < 8) return 'Пароль меньше 8 символов'
+      else if (text === 'Пароль' && !this.validatePass(this.inputs.password1.value)) return 'Некорректный Пароль'
+      else if (text === 'Повторите пароль' && !this.checkPasswords) return 'Пароль не совпадает'
+      else return 'Введите ' + text.toLowerCase()
+    },
+    errorClear () {
+      for (let key in this.inputs) {
+        this.inputs[key].error = false
+        this.inputs[key].inputError = false
+      }
+    },
+    showCheckIcon (input) {
+      if (input.inputType === 'password' && input.value.length > 7) return true
+      else if (input.inputType === 'email' && this.validateEmail(input.value)) return true
+      else if ((input.inputType !== 'email' && input.inputType !== 'password') && input.value) return true
+      else return false
     }
   }
 }
@@ -265,6 +276,12 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            i.far.fa-flag {
+               font-weight: 900;
+            }
+            i.fas.fa-check {
+              color: #569801
+            }
           }
           input {
             border: none;

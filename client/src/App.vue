@@ -26,13 +26,28 @@ export default {
   .vdp-datepicker {
     div {
       input {
+        color: #7e7e7e;
         background-color: transparent;
         border: none;
         outline: none;
+        cursor: pointer;
       }
     }
     .vdp-datepicker__calendar {
-      width: 173px !important;
+      width: 203px !important;
+      top: 22px;
+      left: -28px;
+      .day {
+        &:hover {
+          border: 1px solid #569801 !important;
+        }
+      }
+      .selected {
+        background: #569801 !important;
+      }
     }
+  }
+  .Password__strength-meter::before, .Password__strength-meter::after  {
+    width: 16% !important;
   }
 </style>

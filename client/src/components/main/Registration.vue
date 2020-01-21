@@ -132,20 +132,20 @@ export default {
   },
   methods: {
     send () {
-      if (this.checkInputs()) {
-        this.close()
-      }
-      // this.checkInputs() && this.$store.dispatch('sendRegistrationData', {
-      //   lasstName: this.lasstName.value,
-      //   firstName: this.firstName.value,
-      //   patronymic: this.patronymic.value,
-      //   age: this.age.value,
-      //   country: this.country.value,
-      //   city: this.city.value,
-      //   email: this.email.value,
-      //   password2: this.password2.value
-      // })
-      // this.close()
+      // if (this.checkInputs()) {
+      this.$store.dispatch('sendRegistrationData', {
+        test: 1
+        // lastName: 'this.inputs.lastName.value'
+        // firstName: this.inputs.firstName.value,
+        // patronymic: this.inputs.patronymic.value,
+        // age: this.inputs.age.value,
+        // country: this.inputs.country.value,
+        // city: this.inputs.city.value,
+        // email: this.inputs.email.value,
+        // password: this.inputs.password1.value
+      })
+      this.close()
+      // }
     },
     checkInputs () {
       this.errorClear()

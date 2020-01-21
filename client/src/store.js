@@ -15,7 +15,7 @@ export default new Vuex.Store({
   },
   actions: {
     async sendRegistrationData ({ state }, data) {
-      const res = await axios.post(`${state.server}/registration`, JSON.stringify(data))
+      const res = await axios.post(`${state.server}/registration`, data)
       console.log(res)
     }
   },

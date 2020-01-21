@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000
 const cors = require('cors');
 const bodyParser = require('body-parser')
+const routes = require('./routes/index')  
 require('dotenv').config()
 
 const app = express()
@@ -10,7 +11,8 @@ const app = express()
 app.use(cors());
 app.options('*', cors());
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(routes)
 
 async function start () {
     try {
@@ -27,9 +29,3 @@ async function start () {
 }
 
 start()
-
-app.post('/registration', urlencodedParser, (req, res) => {
-    res.send('ok')
-    console.log('/////////');
-    console.log(req.body);
-}) 

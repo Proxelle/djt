@@ -1,5 +1,4 @@
 node_modules
-securityData.js
 
 # local env files
 .env.local

@@ -57,7 +57,7 @@ export default {
     border: 1px #bfbfbf solid;
     box-shadow: inset 0px 1px 2px rgba(0,0,0,0.15);
     color: white;
-    background-color: #969662;
+    background-color: #719f5e;
     .header-search-icon {
       height: 26px;
       width: 26px;
@@ -65,7 +65,7 @@ export default {
       align-items: center;
       justify-content: center;
       font-size: 15px;
-      color: #474631;
+      color: #2b3129;
       cursor: pointer;
     }
     input {
@@ -73,7 +73,7 @@ export default {
       width: 126px;
       border: none;
       outline: none;
-      background-color: #969662;
+      background-color: #719f5e;
       color: white;
       font-weight: bold;
       &::placeholder {
@@ -87,7 +87,7 @@ export default {
       align-items: center;
       justify-content: center;
       font-size: 17px;
-      color: #474631;
+      color: #2b3129;
       opacity: 0.6;
       cursor: pointer;
     }

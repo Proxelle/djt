@@ -39,7 +39,7 @@ export default {
     padding: 10px;
   }
   .header-line-2 {
-    background-color: #474718;
+    background-color: #2b4423;
     position: absolute;
     left: 0;
     right: 0;

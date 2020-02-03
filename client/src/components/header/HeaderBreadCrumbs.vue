@@ -22,7 +22,7 @@ export default {
             display: block;
         }
         .bread-crumbs-block {
-            background-color: rgba(96, 96, 52, 0.7);
+            background-color: rgba(43, 68, 35, 0.7);
             height: 35px;
             width: 625px;
             position: absolute;

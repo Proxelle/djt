@@ -26,7 +26,7 @@ export default {
     }
     .main-right {
       width: 240px;
-      background-color: #EEEDAE;
+      background-color: #e4d7c2;
     }
   }
 </style>

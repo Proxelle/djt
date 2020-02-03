@@ -219,8 +219,8 @@ export default {
         top: 0px;
         right: 0px;
         box-shadow: 1px 1px 2px rgba(0,0,0,0.4), inset 1px 1px 0px rgba(255,255,255,0.5);
-        background-color: #474718;
-        border: 1px solid #474718;
+        background-color: #2b4423;
+        border: 1px solid #2b4423;
         color: black;
         text-shadow: white;
         text-shadow: 0.4px 0.4px 0.4px lightgrey;
@@ -230,10 +230,10 @@ export default {
         justify-content: center;
         transition: all .3s ease-out;
         &:hover {
-          background-color: #606034;
+          background-color: #2b4423d9;
         }
         &:active {
-          background-color: #474718;
+          background-color: #2b4423;
           box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
         }
       }
@@ -348,9 +348,9 @@ export default {
           box-shadow: 1px 1px 2px rgba(0,0,0,0.4), inset 1px 1px 0px rgba(255,255,255,0.5);
           display: inline-block;
           padding: 5px 15px;
-          background-color: #474718;
+          background-color: #2b4423;
           color: white;
-          border: 1px solid #474718;
+          border: 1px solid #2b4423;
           cursor: pointer;
           transition: all .3s ease-out;
           &:hover {

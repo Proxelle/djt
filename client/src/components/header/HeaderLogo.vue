@@ -12,7 +12,7 @@ export default {
 
 <style scoped lang="scss">
   .logo {
-    background: #EEEDAE;
+    background: #e4d7c2;
     flex-grow: 1;
     margin-left: 10px;
     display: flex;

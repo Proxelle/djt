@@ -39,7 +39,7 @@ export default {
 <style scoped lang="scss">
   .autorization-title {
     text-align: center;
-    background-color: #474718;
+    background-color: #2b4423;
     color: white;
     font-weight: bold;
     font-size: 17px;
@@ -82,9 +82,9 @@ export default {
         box-shadow: 1px 1px 2px rgba(0,0,0,0.4), inset 1px 1px 0px rgba(255,255,255,0.5);
         display: inline-block;
         padding: 5px 15px;
-        background-color: #474718;
+        background-color: #2b4423;
         color: white;
-        border: 1px solid #474718;
+        border: 1px solid #2b4423;
         cursor: pointer;
         transition: all .3s ease-out;
         &:hover {
@@ -122,17 +122,17 @@ export default {
       display: inline-block;
       padding: 6px 0px;
       width: 100%;
-      background-color: #474718;
+      background-color: #2b4423;
       color: white;
-      border: 1px solid #474718;
+      border: 1px solid #2b4423;
       cursor: pointer;
       text-align: center;
       transition: all .3s ease-out;
       &:hover {
-        background-color: #606034;
+        background-color: #2b4423d9;
       }
       &:active {
-        background-color: #474718;
+        background-color: #2b4423;
         box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
       }
     }

@@ -12,10 +12,7 @@ export default {
   data () {
     return {
       menu: [
-        { name: 'Главная', link: 'home', list: [{ name: '123', link: 'home' }, { name: '1131223', link: 'home' }, { name: '12312313', link: 'home' }] },
-        { name: 'Магазин', link: 'home', list: [{ name: '123', link: 'home' }, { name: '1131223', link: 'home' }, { name: '12312313', link: 'home' }] },
-        { name: 'Ссылки', link: 'home', list: [{ name: '123', link: 'home' }, { name: '1131223', link: 'home' }, { name: '12312313', link: 'home' }] },
-        { name: 'Публикации', link: 'home', list: [{ name: '123', link: 'home' }, { name: '1131223', link: 'home' }, { name: '12312313', link: 'home' }] }
+        { name: 'Порода', link: 'home', list: [{ name: 'История создания', link: 'home' }, { name: 'Использование', link: 'home' }] }
       ]
     }
   }
@@ -39,7 +36,7 @@ export default {
             position: relative;
             cursor: pointer;
             &:hover {
-                background-color: #EEEDAE;
+                background-color: #e4d7c2;
                 color: black;
             }
             &:hover > .item-list {
@@ -50,7 +47,7 @@ export default {
                 position: absolute;
                 top: 38px;
                 left: 0px;
-                background-color: #EEEDAE;
+                background-color: #e4d7c2;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -63,7 +60,7 @@ export default {
                     font-size: 12px;
                     &:hover {
                         color: white;
-                        background-color: #606034;
+                        background-color: #2b4423;
                     }
                 }
             }

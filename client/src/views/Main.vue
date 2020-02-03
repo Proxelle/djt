@@ -1,17 +1,20 @@
 <template lang="pug">
   main.main
     section.main-left
+      admin
     aside.main-right
       autorization
 </template>
 
 <script>
 import Autorization from '../components/main/Autorization'
+import Admin from '../components/main/Admin'
 
 export default {
   name: 'main-view',
   components: {
-    'autorization': Autorization
+    Autorization,
+    Admin
   },
   props: {}
 }

@@ -23,6 +23,12 @@ export default new Vuex.Store({
         }
       })
       console.log(res)
+    },
+    async sendPasswordAdmin ({ state }, password) {
+      let res = await axios.post(`${state.server}/admin`, JSON.stringify({ password }), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+      return res.data
     }
   },
   mutations: {

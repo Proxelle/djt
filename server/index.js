@@ -19,11 +19,12 @@ console.log('DB_URL', process.env.DB_URL)
 
 async function start () {
     try {
-        await mongoose.connect(process.env.DB_URL, {
+        await mongoose.connect('mongodb+srv://admin:123@cluster0-5t4ek.mongodb.net/test?retryWrites=true&w=majority', {
+            useUnifiedTopology: true,
             useNewUrlParser: true,
-            useFindAndModify: false
+            // useFindAndModify: true
         })
-        app.listen(PORT, () => {
+        app.listen(3000, () => {
             console.log('Server started...')
         })
     } catch (e) {

@@ -8,7 +8,7 @@
 
 <script>
 import Autorization from '../components/main/Autorization'
-import Admin from '../components/main/Admin'
+import Admin from '../components/main/admin/Admin'
 
 export default {
   name: 'main-view',

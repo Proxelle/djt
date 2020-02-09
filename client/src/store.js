@@ -6,11 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    server: 'http://localhost:3000'
+    server: 'http://localhost:3000',
+    linksPanel: [{ name: 'q', link: 'q' }, { name: 'w', link: 'w' }, { name: 'e', link: 'e' }]
   },
   getters: {
     getServer (state) {
       return state.server
+    },
+    getLinksPanel (state) {
+      return state.linksPanel
     }
   },
   actions: {
@@ -29,9 +33,23 @@ export default new Vuex.Store({
         headers: { 'Content-Type': 'application/json' }
       })
       return res.data
+    },
+    async getLinksPanel ({ state, commit }) {
+      let res = await axios.get(`${state.server}/links-panel`)
+      console.log('links-panel', res.data)
+      commit('changeLinksPanel', res.data)
+    },
+    async changeLinksPanel ({ state, commit }, data) {
+      let res = await axios.post(`${state.server}/change-links-panel`, JSON.stringify({ data }), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log('links-panel', res.data)
+      commit('changeLinksPanel', res.data)
     }
   },
   mutations: {
-
+    changeLinksPanel (state, data) {
+      state.linksPanel = data
+    }
   }
 })

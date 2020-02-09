@@ -6,17 +6,12 @@
 <script>
 export default {
   name: 'header-links',
-  props: {},
-  data () {
-    return {
-      links: [
-        { name: 'Главная', link: 'home' },
-        { name: 'Членство', link: 'home' },
-        { name: 'Магазин', link: 'home' },
-        { name: 'Публикации', link: 'home' },
-        { name: 'Ссылки', link: 'home' },
-        { name: 'Условия', link: 'home' }
-      ]
+  created () {
+    this.$store.dispatch('getLinksPanel')
+  },
+  computed: {
+    links () {
+      return this.$store.getters['getLinksPanel']
     }
   }
 }

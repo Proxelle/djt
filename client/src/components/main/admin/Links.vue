@@ -2,11 +2,16 @@
     .links
       .title Ссылки
       .links-body
+        .title-panel
+          .title-panel-number №
+          .title-panel-name Название
+          .title-panel-link Ссылка
         .links-item(v-for="(item, index) in links")
           span {{ index +1 }}
           input( v-model="links[index].name")
           input( v-model="links[index].link")
-        .btn(@click="test")  asdasd
+        button(@click="test") Сохранить
+        span.error(v-if="!error")  Данные не изменены!
 </template>
 
 <script>
@@ -14,7 +19,8 @@ export default {
   name: 'links',
   data () {
     return {
-      link1: ''
+      link1: '',
+      error: false
     }
   },
   computed: {
@@ -23,14 +29,52 @@ export default {
     }
   },
   methods: {
-    test () {
-      console.log(this.links)
-      this.$store.dispatch('changeLinksPanel', this.links)
+    test (e) {
+      e.preventDefault()
+      let result = this.$store.dispatch('changeLinksPanel', this.links)
+      this.error = result
+
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
+  .links {
+    .title {
+      margin: 0px 0px 10px 10px;
+      font-weight: bold;  
+    }
+    .links-body {
+      .title-panel {
+        display: flex;
+        .title-panel-number {
+          width: 20px;
+        }
+        div {
+          width: 180px;
+        }
+      }
+      .links-item {
+        margin-bottom: 5px;
+        display: block;
+        span {
+          display: inline-block;
+          width: 20px;
+        }
+        input {
+          width: 180px;
+        }
+      }
+      button {
+        margin-left: 20px;
+      }
+      .error {
+        margin-left: 10px;
+      }
+    }
+  }
+  .error {
+    color: red;
+  }
 </style>

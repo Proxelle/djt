@@ -7,7 +7,7 @@
 export default {
   name: 'header-links',
   created () {
-    this.$store.dispatch('getLinksPanel')
+    // this.$store.dispatch('getLinksPanel')
   },
   computed: {
     links () {

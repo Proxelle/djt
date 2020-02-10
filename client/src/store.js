@@ -43,8 +43,11 @@ export default new Vuex.Store({
       let res = await axios.post(`${state.server}/change-links-panel`, JSON.stringify({ data }), {
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log('links-panel', res.data)
-      commit('changeLinksPanel', res.data)
+      if(res.data.length) {
+        commit('changeLinksPanel', data)
+        return true
+      } 
+      else return false
     }
   },
   mutations: {

@@ -1,17 +1,17 @@
 <template lang="pug">
-    .links
-      .title Ссылки
-      .links-body
-        .title-panel
-          .title-panel-number №
-          .title-panel-name Название
-          .title-panel-link Ссылка
-        .links-item(v-for="(item, index) in links")
-          span {{ index +1 }}
-          input( v-model="links[index].name")
-          input( v-model="links[index].link")
-        button(@click="test") Сохранить
-        span.error(v-if="!error")  Данные не изменены!
+  .links
+    .title Ссылки
+    .links-body
+      .title-panel
+        .title-panel-number №
+        .title-panel-name Название
+        .title-panel-link Ссылка
+      .links-item(v-for="(item, index) in links")
+        span {{ index +1 }}
+        input( v-model="links[index].name")
+        input( v-model="links[index].link")
+      button(@click="save") Сохранить
+      span.error(v-if="error") Данные не изменены!
 </template>
 
 <script>
@@ -19,21 +19,19 @@ export default {
   name: 'links',
   data () {
     return {
-      link1: '',
+      links: [],
       error: false
     }
   },
-  computed: {
-    links () {
-      return this.$store.getters['getLinksPanel']
-    }
+  mounted () {
+    this.links = JSON.parse(JSON.stringify(this.$store.getters['getLinksPanel']))
   },
   methods: {
-    test (e) {
+    save (e) {
       e.preventDefault()
-      let result = this.$store.dispatch('changeLinksPanel', this.links)
+      console.log(this.links)
+      let result = this.$store.dispatch('changeLinksPanel', JSON.parse(JSON.stringify(this.links)))
       this.error = result
-
     }
   }
 }
@@ -43,7 +41,7 @@ export default {
   .links {
     .title {
       margin: 0px 0px 10px 10px;
-      font-weight: bold;  
+      font-weight: bold;
     }
     .links-body {
       .title-panel {

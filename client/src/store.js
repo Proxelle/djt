@@ -34,7 +34,7 @@ export default new Vuex.Store({
       })
       return res.data
     },
-    async getLinksPanel ({ state, commit }) {
+    async linksPanel ({ state, commit }) {
       let res = await axios.get(`${state.server}/links-panel`)
       console.log('links-panel', res.data)
       commit('changeLinksPanel', res.data)
@@ -43,11 +43,10 @@ export default new Vuex.Store({
       let res = await axios.post(`${state.server}/change-links-panel`, JSON.stringify({ data }), {
         headers: { 'Content-Type': 'application/json' }
       })
-      if(res.data.length) {
+      if (res.data.length) {
         commit('changeLinksPanel', data)
         return true
-      } 
-      else return false
+      } else return false
     }
   },
   mutations: {

@@ -1,22 +1,25 @@
 <template lang="pug">
   main.main
     section.main-left
-      admin
+      router-view
     aside.main-right
       autorization
 </template>
 
 <script>
 import Autorization from '../components/main/Autorization'
-import Admin from '../components/main/admin/Admin'
 
 export default {
   name: 'main-view',
   components: {
-    Autorization,
-    Admin
+    Autorization
   },
-  props: {}
+  props: {},
+  watch: {
+    $route (to, from) {
+      console.log('ROUTE', this.$route)
+    }
+  }
 }
 </script>
 
@@ -26,6 +29,7 @@ export default {
     padding: 0px 10px;
     .main-left {
       flex-grow: 1;
+      padding-right: 10px;
     }
     .main-right {
       width: 240px;

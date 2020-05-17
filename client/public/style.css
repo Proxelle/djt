@@ -9,6 +9,7 @@ body {
     color: #000000;
     overflow-y: scroll;
     background-color: #7c9f6e;
+    position: relative;
 }
 #app {
     margin: 30px auto;

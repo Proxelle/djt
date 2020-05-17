@@ -26,12 +26,12 @@ export default {
     'header-nav': HeaderNav,
     'header-bread-crumbs': HeaderLogo,
     'header-logo': HeaderBreadCrumbs
-  },
-  props: {}
+  }
 }
 </script>
 
 <style scoped lang="scss">
+header {
   .header-line-1 {
     height: 25px;
     display: flex;
@@ -45,6 +45,7 @@ export default {
     right: 0;
     height: 50px;
     z-index: 0;
+    min-width: 900px;
     .header-line-white {
       border-top: 2px solid white;
       border-bottom: 2px solid white;
@@ -57,4 +58,5 @@ export default {
     display: flex;
     justify-content: space-between;
   }
+}
 </style>

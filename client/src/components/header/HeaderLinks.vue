@@ -1,17 +1,18 @@
 <template lang="pug">
   .header-links
-    a.header-link(v-for="item in links") {{ item.name }}
+    div(v-for="item in links")
+      router-link.header-link(:to="item.link") {{ item.name }}
 </template>
 
 <script>
 export default {
   name: 'header-links',
   created () {
-    this.$store.dispatch('linksPanelToServer')
+    this.$store.dispatch('main/getlinksPanel')
   },
   computed: {
     links () {
-      return this.$store.getters['getLinksPanel']
+      return this.$store.getters['main/getLinksPanel']
     }
   }
 }

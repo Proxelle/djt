@@ -6,22 +6,23 @@
       .registration-title
         span.registration-title-text Регистрация
         span.registration-required-fields * - обязательные поля
-      .registration-input-section(v-for="input in inputs")
-        label {{ input.label + (input.required ? ' *' : '') }}
-        .registration-input(:class="{'input-error': (input.inputError && !input.value)}")
-          .registration-input-icon
-            i.fas.fa-check(v-if="showCheckIcon(input)")
-            i(v-else :class="input.icon")
-          .input-datepicker(v-if="input.name === 'age'" @click="inputFocus(input)")
-            datepicker(v-model="input.value" :language="ru")
-          input(v-else v-model="input.value" @focus="inputFocus(input)" :type="input.inputType")
-          transition(name="error")
-            .error-label(v-show="input.error")
-              .error-label-icon
-                i.fas.fa-exclamation
-              .error-label-text {{ errorText(input.label) }}
-              .error-label-triangle
-      password(v-model="inputs.password1.value" :strength-meter-only="true")
+      .registration-inputs
+        .registration-input-section(v-for="input in inputs")
+          label {{ input.label + (input.required ? ' *' : '') }}
+          .registration-input(:class="{'input-error': (input.inputError && !input.value)}")
+            .registration-input-icon
+              i.fas.fa-check(v-if="showCheckIcon(input)")
+              i(v-else :class="input.icon")
+            .input-datepicker(v-if="input.name === 'age'" @click="inputFocus(input)")
+              datepicker(v-model="input.value" :language="ru")
+            input(v-else v-model="input.value" @keydown.tab="pressTab" @focus="inputFocus(input)" :type="input.inputType")
+            transition(name="error")
+              .error-label(v-show="input.error")
+                .error-label-icon
+                  i.fas.fa-exclamation
+                .error-label-text {{ errorText(input.label) }}
+                .error-label-triangle
+        password(v-model="inputs.password1.value" :strength-meter-only="true")
       .registration-button-section
         .registration-button-btn(@click="send") Отправить
 </template>
@@ -133,11 +134,11 @@ export default {
   methods: {
     send () {
       if (this.checkInputs()) {
-        this.$store.dispatch('sendRegistrationData', {
+        this.$store.dispatch('main/sendRegistrationData', {
           lastName: this.inputs.lastName.value,
           firstName: this.inputs.firstName.value,
           patronymic: this.inputs.patronymic.value,
-          age: this.inputs.age.value,
+          age: this.getCurrectDate(this.inputs.age.value),
           country: this.inputs.country.value,
           city: this.inputs.city.value,
           email: this.inputs.email.value,
@@ -145,6 +146,9 @@ export default {
         })
         this.close()
       }
+    },
+    getCurrectDate (date) {
+      return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
     },
     checkInputs () {
       this.errorClear()
@@ -171,8 +175,8 @@ export default {
       else return true
     },
     inputFocus (input) {
-      if (input.error) input.inputError = true
-      input.error = false
+      // if (input.error) input.inputError = true
+      // input.error = false
     },
     close () {
       this.$emit('close')
@@ -207,7 +211,6 @@ export default {
     background-color: #ffffff;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
     .registration {
-      padding: 15px;
       background-color: #ffffff;
       border-radius: 1px;
       box-shadow: 0px 0px 2px rgba(0,0,0,0.4);
@@ -239,6 +242,7 @@ export default {
       }
       .registration-title {
         margin-bottom: 15px;
+        padding: 15px 15px 0px 15px;
         span.registration-title-text {
           font-size: 14px;
           color: #7e7e7e;
@@ -251,99 +255,106 @@ export default {
           display: block;
         }
       }
-      .registration-input-section {
-        margin-bottom: 15px;
-        label {
-          color: #7e7e7e;
-          font-size: 11px;
-        }
-        .registration-input {
-          position: relative;
-          width: 100%;
-          box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
-          height: 26px;
-          outline: none;
-          background-color: #f4f4f4;
-          border: none;
-          margin-bottom: 14px;
-          display: flex;
-          align-items: center;
-          color: #BABABA;
-          border: 1px solid #FFFFFF;
-          .registration-input-icon {
-            width: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            i.far.fa-flag {
-               font-weight: 900;
-            }
-            i.fas.fa-check {
-              color: #569801
-            }
-          }
-          input {
-            border: none;
-            outline: none;
-            background-color: transparent;
+      .registration-inputs {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 75vh;
+        padding: 0px 15px;
+        .registration-input-section {
+          margin-bottom: 15px;
+          label {
             color: #7e7e7e;
-            &::placeholder {
-              color: #BABABA !important;
-            }
+            font-size: 11px;
           }
-          .error-label {
-            position: absolute;
-            right: 213px;
-            top: 0px;
-            font-size: 12px;
-            padding: 3px 6px;
-            min-height: 20px;
-            color: white;
-            font-weight: bold;
-            white-space: nowrap;
+          .registration-input {
+            position: relative;
+            width: 100%;
+            box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
+            height: 26px;
+            outline: none;
+            background-color: #f4f4f4;
+            border: none;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
-            border: 1px solid #991200;
-            background-color: #e0401d;
-            background-image: linear-gradient(to bottom, #e0401d, #b73016);
-            .error-label-icon {
-              height: 15px;
-              width: 15px;
+            color: #BABABA;
+            border: 1px solid #FFFFFF;
+            .registration-input-icon {
+              width: 28px;
               display: flex;
-              justify-content: center;
               align-items: center;
-              background-color: #76200E;
-              border-radius: 8px;
-              font-size: 9px;
-              color: #CC3819;
-              margin-right: 4px;
+              justify-content: center;
+              padding: 0px 5px;
+              i.far.fa-flag {
+                font-weight: 900;
+              }
+              i.fas.fa-check {
+                color: #569801
+              }
             }
-            .error-label-triangle {
-              border: 6px solid transparent;
-              border-left: 6px solid #991200;
+            input {
+              border: none;
+              outline: none;
+              background-color: transparent;
+              color: #7e7e7e;
+              &::placeholder {
+                color: #BABABA !important;
+              }
+            }
+            .error-label {
               position: absolute;
-              right: -13px;
+              right: 213px;
+              top: 0px;
+              font-size: 12px;
+              padding: 3px 6px;
+              min-height: 20px;
+              color: white;
+              font-weight: bold;
+              white-space: nowrap;
+              display: flex;
+              align-items: center;
+              border: 1px solid #991200;
+              background-color: #e0401d;
+              background-image: linear-gradient(to bottom, #e0401d, #b73016);
+              .error-label-icon {
+                height: 15px;
+                width: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #76200E;
+                border-radius: 8px;
+                font-size: 9px;
+                color: #CC3819;
+                margin-right: 4px;
+              }
+              .error-label-triangle {
+                border: 6px solid transparent;
+                border-left: 6px solid #991200;
+                position: absolute;
+                right: -13px;
+              }
+            }
+            .error-enter-active {
+              transition: all .3s ease;
+            }
+            .error-leave-active {
+              transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            .error-enter, .error-leave-to {
+              opacity: 0;
+              transform: translateX(-50px);
             }
           }
-          .error-enter-active {
-            transition: all .3s ease;
+          .input-error {
+            border: 1px solid red;
           }
-          .error-leave-active {
-            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-          }
-          .error-enter, .error-leave-to {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-        }
-        .input-error {
-          border: 1px solid red;
         }
       }
       .registration-button-section {
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 8px;
+        padding: 15px 15px;
         .registration-button-btn {
           box-shadow: 1px 1px 2px rgba(0,0,0,0.4), inset 1px 1px 0px rgba(255,255,255,0.5);
           display: inline-block;

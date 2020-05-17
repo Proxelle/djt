@@ -6,15 +6,18 @@
 </template>
 
 <script>
-import headerView from './views/Header'
-import mainView from './views/Main'
-import footerView from './views/Footer'
+import HeaderView from './views/Header'
+import MainView from './views/Main'
+import FooterView from './views/Footer'
 
 export default {
   components: {
-    'header-view': headerView,
-    'main-view': mainView,
-    'footer-view': footerView
+    HeaderView,
+    MainView,
+    FooterView
+  },
+  created () {
+    this.$store.dispatch('main/getPages')
   }
 }
 </script>
@@ -36,7 +39,7 @@ export default {
     .vdp-datepicker__calendar {
       width: 203px !important;
       top: 22px;
-      left: -28px;
+      left: -11px;
       .day {
         &:hover {
           border: 1px solid #569801 !important;

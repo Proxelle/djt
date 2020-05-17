@@ -24,13 +24,12 @@ export default {
     }
   },
   mounted () {
-    this.links = JSON.parse(JSON.stringify(this.$store.getters['getLinksPanel']))
+    this.links = JSON.parse(JSON.stringify(this.$store.getters['main/getLinksPanel']))
   },
   methods: {
     save (e) {
       e.preventDefault()
-      console.log(this.links)
-      let result = this.$store.dispatch('changeLinksPanel', JSON.parse(JSON.stringify(this.links)))
+      let result = this.$store.dispatch('admin/changeLinksPanel', JSON.parse(JSON.stringify(this.links)))
       this.error = result
     }
   }

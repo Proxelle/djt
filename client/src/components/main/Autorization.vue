@@ -1,21 +1,23 @@
 <template lang="pug">
   .autorization
     .autorization-title Авторизация
-    .autorization-section
+    .autorization-section(v-if="!authorized")
       .login.autorization-input
         .autorization-input-icon
           i.fas.fa-user-alt
-        input(placeholder="Логин / E-mail")
+        input(placeholder="Логин / E-mail" v-model="login")
       .password.autorization-input
         .autorization-input-icon
           i.fas.fa-user-alt
-        input(placeholder="Пароль")
+        input(placeholder="Пароль" v-model="pass" type="password")
       .login-button
-        .login-button-btn Войти
+        .login-button-btn(@click="enter") Войти
       .get-password
-        .get-password-btn Забыли пароль?
+        .get-password-btn(@click="getPass") Забыли пароль?
       .registration-section
         .registration-button-btn(@click="openRegistration") Регистрация
+    .authorized-section(v-else)
+      div Добро пожаловать!
 </template>
 
 <script>
@@ -23,6 +25,13 @@ import Registration from './Registration'
 
 export default {
   name: 'autorization',
+  data () {
+    return {
+      login: '',
+      pass: '',
+      authorized: false
+    }
+  },
   methods: {
     openRegistration () {
       this.$modal.show(Registration, {
@@ -31,6 +40,19 @@ export default {
         width: 240,
         pivotY: 0.4
       })
+    },
+    async enter () {
+      if (!this.login.length && !this.pass.length) return
+      let res = await this.$store.dispatch('main/checkLogin', { login: this.login, pass: this.pass })
+      if (res) this.authorized = true
+      else {
+        alert('Неверный логин или пароль!')
+        this.login = ''
+        this.pass = ''
+      }
+    },
+    getPass () {
+      console.log('getPass')
     }
   }
 }
@@ -63,6 +85,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0px 5px;
       }
       input {
         border: none;

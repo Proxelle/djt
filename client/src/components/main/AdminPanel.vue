@@ -15,6 +15,7 @@
 
 <script>
 import Users from '../main/admin/Users'
+import Pages from '../main/admin/Pages'
 
 export default {
   name: 'admin-panel',
@@ -24,13 +25,15 @@ export default {
       login: '',
       pass: '',
       adminPanelItems: [
-        { key: 'Пользователи', value: 'users' }
+        { key: 'Пользователи', value: 'users' },
+        { key: 'Страницы', value: 'pages' }
       ],
       activeItem: ''
     }
   },
   components: {
-    Users
+    Users,
+    Pages
   },
   methods: {
     async submit (e) {
@@ -48,6 +51,18 @@ export default {
     .title {
       padding: 10px 0px;
       font-size: 16px;
+    }
+    .admin-login {
+      label {
+        display: block;
+        input {
+          display: block;
+        }
+      }
+      button {
+        display: block;
+        margin-top: 10px;
+      }
     }
   }
 </style>

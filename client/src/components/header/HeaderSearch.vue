@@ -69,7 +69,6 @@ export default {
       cursor: pointer;
     }
     input {
-      height: 100%;
       width: 126px;
       border: none;
       outline: none;

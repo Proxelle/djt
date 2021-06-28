@@ -67,6 +67,16 @@ export default {
           inputError: false,
           required: true
         },
+        age: {
+          name: 'age',
+          value: '',
+          label: 'Возраст',
+          icon: ['fas', 'fa-birthday-cake'],
+          inputType: 'text',
+          error: false,
+          inputError: false,
+          required: true
+        },
         country: {
           value: '',
           label: 'Страна',
@@ -80,16 +90,6 @@ export default {
           value: '',
           label: 'Город',
           icon: ['fas', 'fa-city'],
-          inputType: 'text',
-          error: false,
-          inputError: false,
-          required: true
-        },
-        age: {
-          name: 'age',
-          value: '',
-          label: 'Возраст',
-          icon: ['fas', 'fa-birthday-cake'],
           inputType: 'text',
           error: false,
           inputError: false,
@@ -303,10 +303,10 @@ export default {
             }
             .error-label {
               position: absolute;
-              right: 213px;
-              top: 0px;
+              left: 0px;
+              bottom: -32px;
               font-size: 12px;
-              padding: 3px 6px;
+              padding: 2px;
               min-height: 20px;
               color: white;
               font-weight: bold;
@@ -330,9 +330,10 @@ export default {
               }
               .error-label-triangle {
                 border: 6px solid transparent;
-                border-left: 6px solid #991200;
+                border-bottom: 6px solid #991200;
                 position: absolute;
-                right: -13px;
+                left: 32px;
+                top: -13px;
               }
             }
             .error-enter-active {

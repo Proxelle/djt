@@ -1,5 +1,5 @@
 <template lang="pug">
-  .autorization
+  .autorization(:class="{'autorization-bg': widthScreen > 780}")
     .autorization-title Авторизация
     .autorization-section(v-if="!authorized")
       .login.autorization-input
@@ -32,12 +32,16 @@ export default {
       authorized: false
     }
   },
+  computed: {
+    widthScreen () {
+      return this.$store.getters['main/getScreenWidth']
+    }
+  },
   methods: {
     openRegistration () {
-      this.$modal.show(Registration, {
-      }, {
+      this.$modal.show(Registration, {}, {
         height: 'auto',
-        width: 240,
+        width: 300,
         pivotY: 0.4
       })
     },
@@ -59,6 +63,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .autorization-bg {
+    background-color: #e4d7c2;
+  }
   .autorization-title {
     text-align: center;
     background-color: #2b4423;
@@ -137,6 +144,10 @@ export default {
       }
     }
   }
+  .authorized-section {
+    padding: 10px 15px;
+    font-weight: bold;
+  }
   .registration-section {
     display: flex;
     justify-content: flex-end;
@@ -158,6 +169,23 @@ export default {
         background-color: #2b4423;
         box-shadow: 1px 1px 0 rgba(255,255,255,0.8), inset 1px 1px 3px rgba(0,0,0,0.3);
       }
+    }
+  }
+  @media (max-width: 580px) {
+    .autorization-title {
+      text-align: center;
+      background-color: white;
+      color: #7e7e7e;
+      font-weight: normal;
+      font-size: 14px;
+      padding: 5px 0px;
+    }
+    .registration-section {
+      display: none;
+    }
+    .get-password {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
     }
   }
 </style>

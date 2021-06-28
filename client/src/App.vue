@@ -18,6 +18,13 @@ export default {
   },
   created () {
     this.$store.dispatch('main/getPages')
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
+  },
+  methods: {
+    updateWidth () {
+      this.$store.commit('main/saveSceenWidth', window.innerWidth)
+    }
   }
 }
 </script>

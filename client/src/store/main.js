@@ -3,13 +3,14 @@ import axios from 'axios'
 export default {
   namespaced: true,
   state: {
-    // server: 'http://localhost',
+    // server: 'http://localhost:8082/',
     server: 'http://api.jagdterrier.ru',
     linksPanel: [],
     user: {},
     pages: [],
     naveMenu: [],
-    subNaveMenu: []
+    subNaveMenu: [],
+    screenWidth: 0
   },
   getters: {
     getServerName (state) {
@@ -18,6 +19,7 @@ export default {
     getLinksPanel (state) {
       return state.linksPanel
     },
+    getPages: (state) => state.pages,
     getPage (state) {
       return value => state.pages.find(item => item.link === value)
     },
@@ -35,11 +37,18 @@ export default {
     },
     getSubNavMenu (state) {
       return state.subNaveMenu
+    },
+    getScreenWidth (state) {
+      return state.screenWidth
     }
   },
   actions: {
     async sendRegistrationData ({ state }, data) {
       await axios.post(`${state.server}/registration`, JSON.stringify(data))
+    },
+    async sendMail ({ state }, data) {
+      let res = await axios.post(`${state.server}/mail`, JSON.stringify(data))
+      console.log('sendMail', res)
     },
     async getlinksPanel ({ state, commit }) {
       let res = await axios.get(`${state.server}/links-panel`)
@@ -80,6 +89,9 @@ export default {
     },
     saveSubNaveMenu (state, data) {
       state.subNaveMenu = data
+    },
+    saveSceenWidth (state, data) {
+      state.screenWidth = data
     }
   }
 }

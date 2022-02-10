@@ -30,18 +30,21 @@ export default {
 <style scoped lang="scss">
   .bread-crumbs {
     position: relative;
+    overflow: hidden;
     img {
         display: block;
+        width: 100%;
     }
     .bread-crumbs-block {
       background-color: rgba(43, 68, 35, 0.7);
       height: 35px;
-      width: 625px;
+      width: 100%;
       position: absolute;
       bottom: 0px;
       z-index: 10;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       padding-left: 5px;
       color: white;
       .bread-crumbs-item {
@@ -75,6 +78,11 @@ export default {
           }
         }
       }
+    }
+  }
+  @media (max-width: 780px) {
+    .bread-crumbs-block {
+      height: auto;
     }
   }
 </style>

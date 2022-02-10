@@ -8,6 +8,7 @@ $config['debug'] = true;
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
+// $config['db']['host']   = "77.222.40.193";
 $config['db']['host']   = "localhost";
 $config['db']['user']   = "profycar46_djt";
 $config['db']['pass']   = "DJT000djt";
@@ -64,14 +65,24 @@ $app->get('/nav-menu', function (Request $request, Response $response) {
 
 $app->get('/pages', function (Request $request, Response $response) {
     $sql = array();
-    $sql[0] = "SELECT name, link FROM `links`";
-    $sql[1] = "SELECT name, link FROM `navitems`";
-    $sql[2] = "SELECT name, link, parent FROM `subnavitems`";
+    $sql[0] = "SELECT name, link, text, id FROM `links`";
+    $sql[1] = "SELECT name, link, text, id FROM `navitems`";
+    $sql[2] = "SELECT name, link, parent, text, id FROM `subnavitems`";
     $result = array();
     for ($i = 0; $i < 3; $i++) {
+        $group = '';
+        if($i === 0) {
+            $group = `links`;
+        } elseif($i === 1) {
+            $group = `navitems`;
+        } elseif($i === 1) {
+            $group = `subnavitems`;
+        }
+
         $res = getQueryDB($this->db, $sql[$i]);
         $res = json_decode($res);
         foreach ($res as $data) {
+            $data->group = $group;
             array_push($result, $data);
         };
     };
@@ -95,6 +106,17 @@ $app->post('/check-login', function (Request $request, Response $response) {
     if(count($res) && $res[0]->pass === $data->pass) $result = true;
     else $result = false;
     $response->getBody()->write(json_encode($result));
+    return $response;
+});
+
+$app->post('/save-page', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody());
+    $response->getBody()->write('$data->group');
+    // $sql = "UPDATE $data->group SET `text`= $data->text WHERE `id` = $data->id";
+    // $sql = "UPDATE `links` SET `text`= 'aaaaa' WHERE `id` = '2'";
+
+    // $res = setQueryDB($this->db, $sql);
+    // $response->getBody()->write($res);
     return $response;
 });
 
@@ -161,6 +183,27 @@ $app->post('/registration', function (Request $request, Response $response) {
     $res = setQueryDB($this->db, $sql);
     $response->getBody()->write($res);
     return $response;
+});
+
+$app->post('/mail', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody());
+    $headers = array(
+        'MIME-Version' =>  '1.0',
+        'Content-type' =>  'text/html; charset=iso-8859-1'
+    );
+    $message = '
+    <html>
+    <head>
+    <title>Письмо с сайта</title>
+    </head>
+    <body>
+        <div><span><b>ФИО: </b></span>'. $data->fio .'</div><br>
+        <div><span><b>e-mail: </b></span>'. $data->email .'</div><br>
+        <div><span><b>Сообщение: </b></span>'. $data->text .'</div>
+    </body>
+    </html>
+    ';
+    mail("jagdterrier@jagdterrier.ru", "Письмо с сайта", $message, $headers);
 });
 
 $app->run();

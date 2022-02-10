@@ -15,8 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(routes)
 
-console.log('DB_URL', process.env.DB_URL)
-
 async function start () {
     try {
         await mongoose.connect(process.env.DB_URL, {

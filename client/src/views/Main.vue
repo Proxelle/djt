@@ -2,22 +2,21 @@
   main.main
     section.main-left
       router-view
-    aside.main-right
+    aside.main-right(v-if="widthScreen >= 705")
       autorization
 </template>
 
 <script>
-import Autorization from '../components/main/Autorization'
+import Autorization from '../components/modal/Autorization'
 
 export default {
   name: 'main-view',
   components: {
     Autorization
   },
-  props: {},
-  watch: {
-    $route (to, from) {
-      console.log('ROUTE', this.$route)
+  computed: {
+    widthScreen () {
+      return this.$store.getters['main/getScreenWidth']
     }
   }
 }
@@ -28,12 +27,12 @@ export default {
     display: flex;
     padding: 0px 10px;
     .main-left {
-      flex-grow: 1;
-      padding-right: 10px;
+      flex: 1 1;
+      padding: 0px 10px 30px 10px;
+      font-size: 14px;
     }
     .main-right {
       width: 240px;
-      background-color: #e4d7c2;
     }
   }
 </style>

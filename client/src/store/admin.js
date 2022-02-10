@@ -33,6 +33,9 @@ export default {
     },
     async setUser ({ rootState }, data) {
       await axios.post(`${rootState.main.server}/set-user`, JSON.stringify(data))
+    },
+    async seveEditPage ({ rootState }, page) {
+      await axios.post(`${rootState.main.server}/save-page`, JSON.stringify(page))
     }
   },
   mutations: {

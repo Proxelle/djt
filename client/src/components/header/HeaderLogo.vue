@@ -1,7 +1,7 @@
 <template lang="pug">
   .logo
     router-link.logo-wrapper(:to="'/'" title="Национальный клуб породы Немецкий Охотничий Терьер (Ягдтерьер)")
-      img(src="../../assets/img/logo.png")
+      img(src="../../assets/img/logo/logo_ru.png")
       .logo-name Национальный клуб породы Немецкий Охотничий Терьер (Ягдтерьер)
 </template>
 

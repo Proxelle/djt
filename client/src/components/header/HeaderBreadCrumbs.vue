@@ -5,7 +5,7 @@
       span Текущая Страница:
       .bread-crumbs-item(v-for="crumb in crumbs")
         .triangle
-        router-link.bread-crumb-active(:to="crumb.link") {{ crumb.name }}
+        router-link.bread-crumb-active(:to="crumb.link || ''") {{ crumb.name }}
 </template>
 
 <script>

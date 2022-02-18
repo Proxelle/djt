@@ -45,8 +45,8 @@
         button.menubar-button(@click="showImagePrompt(commands.image)") Картинка
     editor-content.editor-content(:editor="editor")
     .editor-buttons
-      .editor-button(@click="savePage") Сохранить
-      .editor-button(@click="cencel") Отмена
+      button(@click="savePage") Сохранить
+      button(@click="cencel") Отмена
 </template>
 
 <script>

@@ -46,9 +46,8 @@ export default {
     async sendRegistrationData ({ state }, data) {
       await axios.post(`${state.server}/registration`, JSON.stringify(data))
     },
-    async sendMail ({ state }, data) {
-      let res = await axios.post(`${state.server}/mail`, JSON.stringify(data))
-      console.log('sendMail', res)
+    sendMail ({ state }, data) {
+      axios.post(`${state.server}/mail`, JSON.stringify(data))
     },
     async getlinksPanel ({ state, commit }) {
       let res = await axios.get(`${state.server}/links-panel`)

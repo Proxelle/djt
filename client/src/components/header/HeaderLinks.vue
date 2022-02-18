@@ -61,6 +61,7 @@ export default {
           cursor: pointer;
           font-weight: bold;
           line-height: 15px;
+          white-space: nowrap;
         }
       }
     }

@@ -16,6 +16,7 @@
 <script>
 import Users from '../main/admin/Users'
 import Pages from '../main/admin/Pages'
+import Faq from '../main/admin/Faq.vue'
 
 export default {
   name: 'admin-panel',
@@ -26,14 +27,16 @@ export default {
       pass: '',
       adminPanelItems: [
         { key: 'Пользователи', value: 'users' },
-        { key: 'Страницы', value: 'pages' }
+        { key: 'Страницы', value: 'pages' },
+        { key: 'Вопросы и ответы', value: 'faq' },
       ],
       activeItem: ''
     }
   },
   components: {
     Users,
-    Pages
+    Pages,
+    Faq
   },
   methods: {
     async submit (e) {

@@ -150,6 +150,57 @@ $app->get('/users-list', function (Request $request, Response $response) {
     return $response;
 });
 
+$app->get('/admins', function (Request $request, Response $response) {
+    $sql = "SELECT * FROM users WHERE rights = 'admin'";
+    $res = getQueryDB($this->db, $sql);
+    $result = json_decode($res);
+    $response->getBody()->write(json_encode($result));
+    return $response;
+});
+
+$app->post('/add-question', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody());
+    $sql = "INSERT INTO faq (question, answer, admin_id)
+        VALUES (
+            '$data->question',
+            '$data->answer',
+            '$data->admin_id'
+        )";
+    $res = setQueryDB($this->db, $sql);
+    $response->getBody()->write($res);
+    return $response;
+});
+
+$app->post('/edit-question', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody());
+    $fields = '';
+    foreach ($data as $key => $value) {
+        if($key !== 'id') $fields = $fields."$key='$value',";
+    };
+    $fields = substr($fields,0,-1);
+    $sql = "UPDATE `faq` SET $fields WHERE `id` = $data->id";
+
+    $res = setQueryDB($this->db, $sql);
+    $response->getBody()->write($res);
+    return $response;
+});
+
+$app->post('/delete-question', function (Request $request, Response $response) {
+    $id = json_decode($request->getBody());
+    $sql = "DELETE FROM faq WHERE id = $id";
+    $res = setQueryDB($this->db, $sql);
+    $response->getBody()->write($res);
+    return $response;
+});
+
+$app->get('/get-questions', function (Request $request, Response $response) {
+    $sql = "SELECT * FROM `faq`";
+    $res = getQueryDB($this->db, $sql);
+    $result = json_decode($res);
+    $response->getBody()->write(json_encode($result));
+    return $response;
+});
+
 
 $app->post('/check-adm-pass', function (Request $request, Response $response) {
     $sql = "SELECT * FROM `admPass`";

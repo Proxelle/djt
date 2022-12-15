@@ -11,6 +11,11 @@
     section.section-2
       button.write-mail-btn(@click="openModalWriteMail") Написать нам
       .links
+       
+        a(href="https://www.djt-club.de/" target="_blank")
+          img(src="../assets/img/links/djt-de.png")
+        a(href="https://www.iv-djt.com/" target="_blank")
+          img(src="../assets/img/links/iv-djt.png")
         a(href="http://rkf.org.ru/" title="Российская кинологическая федерация" target="_blank")
           img(src="../assets/img/links/rkf.jpg")
         a(href="http://rfos.info/" title="Федерация охотничьего собаководства (РФОС)" target="_blank")
